@@ -1,0 +1,31 @@
+package jdbc_01_connection;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class connect {
+	public static void main(String[] args) {
+
+		try {
+			// driver
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// localhost
+			// username
+			// pass
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/WD_adv_4_30", "root",
+					"Anant@1234");
+
+			if (con != null) {
+				System.out.println("Connection established");
+			}
+
+			else {
+				System.out.println("Connection not established");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
