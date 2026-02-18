@@ -1,0 +1,199 @@
+package jdbc_04_crud;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class InsertData {
+
+	public static final String loadDriver = "com.mysql.cj.jdbc.Driver";
+	public static final String url = "jdbc:mysql://localhost:3306/WD_adv_4_30";
+	public static final String username = "root";
+	public static final String password = "Anant@1234";
+
+	public static final String GetAllData = "select * from crud";
+	public static final String GetDataByID = "select * from crud where id = ?";
+	public static final String InsertData = "insert into crud values(?,?,?,?)";
+	public static final String UpdateData = "update crud set name = ? , course = ? , age = ? where id = ?";
+	public static final String DeleteData = "delete from crud where id = ?";
+
+	public static void main(String[] args) {
+
+		try {
+			Class.forName(loadDriver);
+
+			Connection con = DriverManager.getConnection(url, username, password);
+
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr);
+
+//			Prepared
+			PreparedStatement ps1 = con.prepareStatement(GetAllData);
+			PreparedStatement ps2 = con.prepareStatement(GetDataByID);
+			PreparedStatement ps3 = con.prepareStatement(InsertData);
+			PreparedStatement ps4 = con.prepareStatement(UpdateData);
+			PreparedStatement ps5 = con.prepareStatement(DeleteData);
+
+			while (true) {
+
+				System.out.println("-------- CRUD OPERATION --------");
+				System.out.println("1. Display All Data");
+				System.out.println("2. Display All Data by ID");
+				System.out.println("3. Insert New Data");
+				System.out.println("4. Update Data");
+				System.out.println("5. Delete Data");
+				System.out.println("6. Exit \n");
+
+				System.out.println("Enter your Choice ");
+				String choice = br.readLine();
+
+				switch (choice) {
+
+				case "1": {
+
+//					ExecuteQuery - select command hai
+					ResultSet rs = ps1.executeQuery();
+
+					while (rs.next()) {
+						System.out.println(
+								rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getInt(4));
+					}
+					break;
+				}
+
+				case "2": {
+					System.out.println("Enter your ID");
+					int id = Integer.parseInt(br.readLine());
+
+					ps2.setInt(1, id);
+
+					ResultSet rs = ps2.executeQuery();
+
+					while (rs.next()) {
+						System.out.println(
+								rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getInt(4));
+					}
+					break;
+
+				}
+
+				case "3": {
+
+					System.out.println("Enter your ID");
+					int id = Integer.parseInt(br.readLine());
+
+					System.out.println("Enter your Name");
+					String name = (br.readLine());
+
+					System.out.println("Enter your Course");
+					String course = (br.readLine());
+
+					System.out.println("Enter your age");
+					int age = Integer.parseInt(br.readLine());
+
+					ps3.setInt(1, id);
+					ps3.setString(2, name);
+					ps3.setString(3, course);
+					ps3.setInt(4, age);
+
+					int k = ps3.executeUpdate();
+
+					if (k > 0) {
+						System.out.println("Record Inserted");
+					} else {
+						System.out.println("Record Not Inserted");
+					}
+
+					break;
+
+				}
+				case "4": {
+
+					System.out.println("Enter your ID");
+					int id = Integer.parseInt(br.readLine());
+
+					ps2.setInt(1, id);
+
+					ResultSet rs = ps2.executeQuery();
+
+					if (rs.next()) {
+						// woh id exist hai
+
+						System.out.println("Old Name is : " + rs.getString(2));
+						System.out.println("Enter your New Name");
+						String name = (br.readLine());
+
+						System.out.println("Old Course name is : " + rs.getString(3));
+						System.out.println("Enter your New Course Name");
+						String course = (br.readLine());
+
+						System.out.println("Old Age is : " + rs.getInt(4));
+						System.out.println("Enter your New Age");
+						int age = Integer.parseInt(br.readLine());
+
+						ps4.setString(1, name);
+						ps4.setString(2, course);
+						ps4.setInt(3, age);
+						ps4.setInt(4, id);
+
+						int k = ps4.executeUpdate();
+
+						if (k > 0) {
+							System.out.println("Update Completed");
+						} else {
+							System.out.println("Update Failed");
+						}
+
+					} else {
+						System.out.println("Record Not Found");
+					}
+
+					break;
+				}
+				case "5": {
+					System.out.println("Enter your ID");
+					int id = Integer.parseInt(br.readLine());
+
+					ps2.setInt(1, id);
+
+					ResultSet rs = ps2.executeQuery();
+
+					if (rs.next()) {
+						ps5.setInt(1, id);
+
+						int k = ps5.executeUpdate();
+
+						if (k > 0) {
+							System.out.println("Record Deleted");
+						} else {
+							System.out.println("Record Not deleted");
+						}
+
+					} else {
+						System.out.println("Record Not Found");
+					}
+					break;
+
+				}
+				case "6": {
+					System.out.println("END");
+					return;
+				}
+
+				default: {
+					System.out.println("Invalid Choice");
+				}
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

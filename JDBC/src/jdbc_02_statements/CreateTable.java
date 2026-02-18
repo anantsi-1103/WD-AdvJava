@@ -10,7 +10,7 @@ public class CreateTable {
 	public static final String username = "root";
 	public static final String password = "Anant@1234";
 
-	public static final String QUERY = "create table stud(id int primary key, name varchar(30), age int not null)";
+	public static final String QUERY = "create table crud(id int primary key, name varchar(30),course varchar(30), age int not null)";
 
 	public static void main(String[] args) {
 
@@ -24,7 +24,7 @@ public class CreateTable {
 
 			int k = st.executeUpdate(QUERY);
 
-			if (k == 0) {
+			if (k>0) {
 				System.out.println("Table Created");
 			} else {
 				System.out.println("Table Not Created");

@@ -1,0 +1,81 @@
+package jdbc_04_crud;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class InsertData {
+
+	public static final String loadDriver = "com.mysql.cj.jdbc.Driver";
+	public static final String url = "jdbc:mysql://localhost:3306/WD_adv_4_30";
+	public static final String username = "root";
+	public static final String password = "Anant@1234";
+
+	public static final String GetAllData = "select * from crud";
+	public static final String GetDataByID = "select * from crud where id = ?";
+	public static final String InsertData = "insert into crud values(?,?,?,?)";
+	public static final String UpdateData = "update crud set name = ? , course = ? , age = ? where id = ?";
+	public static final String DeleteData = "delete from crud where id = ?";
+
+	public static void main(String[] args) {
+
+		try {
+			Class.forName(loadDriver);
+
+			Connection con = DriverManager.getConnection(url, username, password);
+
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr);
+
+//			Prepared
+			PreparedStatement ps1 = con.prepareStatement(GetAllData);
+			PreparedStatement ps2 = con.prepareStatement(GetDataByID);
+			PreparedStatement ps3 = con.prepareStatement(InsertData);
+			PreparedStatement ps4 = con.prepareStatement(UpdateData);
+			PreparedStatement ps5 = con.prepareStatement(DeleteData);
+
+			while (true) {
+
+				System.out.println("-------- CRUD OPERATION --------");
+				System.out.println("1. Display All Data");
+				System.out.println("2. Display All Data by ID");
+				System.out.println("3. Insert New Data");
+				System.out.println("4. Update Data");
+				System.out.println("5. Delete Data");
+				System.out.println("6. Exit \n");
+
+				System.out.println("Enter your Choice ");
+				String choice = br.readLine();
+
+				switch (choice) {
+
+				case "1": {
+
+//					ExecuteQuery - select command hai
+					ResultSet rs = ps1.executeQuery();
+
+					while (rs.next()) {
+						System.out.println(
+								rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3) + "\t" + rs.getInt(4));
+					}
+					break;
+				}
+
+				case "2": {
+
+				}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

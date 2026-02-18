@@ -1,0 +1,7 @@
+package jdbc_02_statements;
+
+public class InsertData {
+	public static void main(String[] args) {
+
+	}
+}
