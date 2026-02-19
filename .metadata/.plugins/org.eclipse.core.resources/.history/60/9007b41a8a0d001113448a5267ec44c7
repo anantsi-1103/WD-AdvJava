@@ -1,0 +1,107 @@
+create table BankCustomer
+(accno int primary key ,
+custid int ,
+custname varchar(40),
+balance int ,
+acctype varchar(30));
+
+create table CustomerAddress(
+accno int primary key ,
+hno varchar(30),
+sname varchar(30),
+city varchar(30),
+state varchar(30),
+pincode int ,
+foreign key (accno) references BankCustomer(accno));
+
+create table CustomerContact(
+accno int primary key ,
+mailid varchar(50),
+phoneno varchar(40),
+foreign key (accno) references CustomerAddress(accno));
+
+
+-- Drop the procedure if it exist
+DROP PROCEDURE IF EXISTS register;
+
+-- Change the delimiter to $$ to handle semicolons inside the procedure
+DELIMITER $$
+
+-- Create the procedure
+CREATE PROCEDURE register(
+    IN ano INT,
+    IN cid INT,
+    IN cname VARCHAR(20),
+    IN bal INT,
+    IN actype VARCHAR(20),
+    IN hn VARCHAR(20),
+    IN sn VARCHAR(20),
+    IN ct VARCHAR(15),
+    IN st VARCHAR(20),
+    IN pcode VARCHAR(30),
+    IN mid VARCHAR(20),
+    IN pno varchar(20)
+)
+BEGIN
+    -- Insert into BankCustomer
+    INSERT INTO BankCustomer (accno, custid, custname, balance, acctype)
+    VALUES (ano, cid, cname, bal, actype);
+
+    -- Insert into CustomerAddress
+    INSERT INTO CustomerAddress (accno, hno, sname, city, state, pincode)
+    VALUES (ano, hn, sn, ct, st, pcode);
+
+    -- Insert into CustomerContact
+    INSERT INTO CustomerContact (accno, mailid, phoneno)
+    VALUES (ano, mid, pno);
+END$$
+
+-- Reset the delimiter back to semicolon
+DELIMITER ;
+
+
+
+
+-- Drop the procedure if it exists
+DROP PROCEDURE IF EXISTS retrieve;
+
+-- Change the delimiter to $$ to handle semicolons inside the procedure
+DELIMITER $$
+
+-- Create the retrieve procedure
+CREATE PROCEDURE retrieve(
+    IN ano INT,  -- Input parameter for account number
+    OUT cid INT,
+    OUT cname VARCHAR(20),
+    OUT bal INT,
+    OUT actype VARCHAR(20),
+    OUT hn VARCHAR(20),
+    OUT sn VARCHAR(20),
+    OUT ct VARCHAR(15),
+    OUT st VARCHAR(20),
+    OUT pcode VARCHAR(30),
+    OUT mid VARCHAR(20),
+    OUT pno varchar(20)
+)
+BEGIN
+    -- Retrieve customer data from BankCustomer table
+    SELECT custid, custname, balance, acctype  -- table ke entites se
+    INTO cid, cname, bal, actype  -- procedure
+    FROM BankCustomer
+    WHERE accno = ano; -- 100
+
+    -- Retrieve customer address from CustomerAddress table
+    SELECT hno, sname, city, state, pincode
+    INTO hn, sn, ct, st, pcode
+    FROM CustomerAddress
+    WHERE accno = ano;
+
+    -- Retrieve customer contact details from CustomerContact table
+    SELECT mailid, phoneno
+    INTO mid, pno
+    FROM CustomerContact
+    WHERE accno = ano;
+END$$
+
+-- Reset the delimiter back to semicolon
+DELIMITER ;

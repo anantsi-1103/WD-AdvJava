@@ -1,0 +1,71 @@
+package jdbc_05_callable;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Types;
+import java.util.Scanner;
+
+public class CallableOut {
+
+	public static final String loadDriver = "com.mysql.cj.jdbc.Driver";
+	public static final String url = "jdbc:mysql://localhost:3306/WD_adv_4_30";
+	public static final String username = "root";
+	public static final String password = "Anant@1234";
+
+	public static final String query = "{ call retrieve(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+	public static void main(String[] args) {
+
+		try {
+			Class.forName(loadDriver);
+
+			Connection con = DriverManager.getConnection(url, username, password);
+
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr);
+
+			CallableStatement cs = con.prepareCall(query);
+
+			Scanner s = new Scanner(System.in);
+			System.out.println("Enter your Account Number");
+			int accno = s.nextInt();
+
+			cs.setInt(1, accno); // ACCN
+
+			cs.registerOutParameter(2, Types.INTEGER); // custid
+			cs.registerOutParameter(3, Types.VARCHAR); // name
+			cs.registerOutParameter(4, Types.INTEGER); // balance
+			cs.registerOutParameter(5, Types.VARCHAR); // acc type
+			cs.registerOutParameter(6, Types.VARCHAR); // hno
+			cs.registerOutParameter(7, Types.VARCHAR); // sname
+			cs.registerOutParameter(8, Types.VARCHAR); // city
+			cs.registerOutParameter(9, Types.VARCHAR); // state
+			cs.registerOutParameter(10, Types.INTEGER); // pincode
+			cs.registerOutParameter(11, Types.VARCHAR); // mid
+			cs.registerOutParameter(12, Types.VARCHAR); // phone no
+
+			cs.execute(); // us process ko execute krdiya 
+
+			System.out.println("Account No : " + accno);
+			System.out.println("Customer ID : " + cs.getInt(2));
+			System.out.println("Customer Name : " + cs.getString(3));
+			System.out.println("Balance : " + cs.getInt(4)+".00");
+			System.out.println("Account Type : " + cs.getString(5));
+			System.out.println("House Number : " + cs.getString(6));
+			System.out.println("Street Name: " + cs.getString(7));
+			System.out.println("City : " + cs.getString(8));
+			System.out.println("State : " + cs.getString(9));
+			System.out.println("Pincode : " + cs.getInt(10));
+			System.out.println("Mail ID : " + cs.getString(11));
+			System.out.println("Phone No : " + cs.getString(12));
+
+//			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

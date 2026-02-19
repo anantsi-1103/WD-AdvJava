@@ -1,0 +1,34 @@
+package jdbc_05_callable;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+
+public class CallableIn {
+
+	public static final String loadDriver = "com.mysql.cj.jdbc.Driver";
+	public static final String url = "jdbc:mysql://localhost:3306/WD_adv_4_30";
+	public static final String username = "root";
+	public static final String password = "Anant@1234";
+
+	public static void main(String[] args) {
+
+		try {
+			Class.forName(loadDriver);
+
+			Connection con = DriverManager.getConnection(url, username, password);
+
+			InputStreamReader isr = new InputStreamReader(System.in);
+			BufferedReader br = new BufferedReader(isr);
+
+//			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}
