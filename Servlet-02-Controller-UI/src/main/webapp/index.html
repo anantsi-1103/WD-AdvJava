@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="logic" method="post">
+        <h1>Student Information</h1>
+
+        <table border="2px">
+            <tr>
+                <th>Student Name:</th>
+                <td><input type="text" name="name"></td>
+            </tr>
+
+            <tr>
+                <th>Gender:</th>
+                <td>
+                    <input type="radio" name="gender" id="male">
+                    <label for="male">Male</label>
+
+                    <input type="radio" name="gender" id="fmale">
+                    <label for="fmale">Female</label>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Course Name:</th>
+                <td>
+                    <select name="course" id="">
+                        <option value="None">None</option>
+                        <option value="Java Full Stack">JFS</option>
+                        <option value="Python Full Stack">PFS</option>
+                        <option value="MERN Stack">MERN</option>
+                        <option value="MEAN Stack">MEAN</option>
+                        <option value="Digital Marketing">DM</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Date of Joining:</th>
+                <td><input type="date" name="date"></td>
+            </tr>
+
+            <tr>
+                <th>Fee: </th>
+                <td><input type="number" name="fee"></td>
+            </tr>
+
+            <tr>
+                <th>State Name:</th>
+                <td><input type="text" name="state"></td>
+            </tr>
+            <tr>
+                <th colspan="2">
+                    <button type="submit">Submit</button>
+                    <button type="reset">Reset</button>
+                </th>
+            </tr>
+        </table>
+    </form>
+</body>
+
+</html>
