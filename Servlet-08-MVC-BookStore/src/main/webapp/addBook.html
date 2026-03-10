@@ -1,24 +1,117 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Add Book</title>
-</head>
-<body>
-	<h2>Add new Book</h2>
 
-	<form action="add" method="post">
-		<label for="bid">Book ID</label> <input type="number" name="id"
-			id="bid"> <br>
-		<br> <label for="bname">Book Name</label> <input type="text"
-			name="name" id="bname"> <br>
-		<br> <label for="bPrice">Book Price</label> <input type="number"
-			name="price" id="bPrice"> <br> <br> <label
-			for="bauthor">Book Author</label> <input type="text" name="author"
-			id="bauthor"> <br>
-		<br> <input type="submit" value="submit"> <input
-			type="reset" value="reset">
-	</form>
+<style>
+body {
+	margin: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	background: linear-gradient(135deg, #667eea, #764ba2);
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.container {
+	background: white;
+	padding: 40px;
+	width: 350px;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+	text-align: center;
+	margin-bottom: 25px;
+	color: #333;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+label {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+input {
+	padding: 10px;
+	margin-bottom: 15px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	font-size: 14px;
+}
+
+input:focus {
+	outline: none;
+	border-color: #667eea;
+}
+
+.buttons {
+	display: flex;
+	justify-content: space-between;
+}
+
+button {
+	padding: 10px 20px;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+	transition: 0.3s;
+}
+
+.submit {
+	background: #667eea;
+	color: white;
+}
+
+.submit:hover {
+	background: #4c5fd7;
+}
+
+.reset {
+	background: #f44336;
+	color: white;
+}
+
+.reset:hover {
+	background: #d32f2f;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h2>📚 Add New Book</h2>
+
+		<form action="add" method="post">
+
+			<label for="bid">Book ID</label> <input type="number" name="id"
+				id="bid" required> <label for="bname">Book Name</label> <input
+				type="text" name="name" id="bname" required> <label
+				for="bPrice">Book Price</label> <input type="number" name="price"
+				id="bPrice" required> <label for="bauthor">Book
+				Author</label> <input type="text" name="author" id="bauthor" required>
+
+			<div class="buttons">
+				<button type="submit" class="submit">Add Book</button>
+				<button type="reset" class="reset">Reset</button>
+			</div>
+
+		</form>
+
+	</div>
+
 </body>
 </html>
+

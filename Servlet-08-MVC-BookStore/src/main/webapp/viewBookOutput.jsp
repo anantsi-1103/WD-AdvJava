@@ -2,20 +2,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="com.logic.bean.BookBean"%>
-<%@ page import="java.util.ArrayList"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Book List</title>
+<title>Book Details</title>
 
 <style>
 body {
 	margin: 0;
 	font-family: Arial, Helvetica, sans-serif;
-	background: linear-gradient(135deg, #43cea2, #185a9d);
-	min-height: 100vh;
+	background: linear-gradient(135deg, #ff9966, #ff5e62);
+	height: 100vh;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -26,7 +25,7 @@ body {
 	padding: 30px;
 	border-radius: 12px;
 	box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-	width: 700px;
+	width: 500px;
 	text-align: center;
 }
 
@@ -37,11 +36,10 @@ h2 {
 table {
 	width: 100%;
 	border-collapse: collapse;
-	margin-top: 15px;
 }
 
 th {
-	background: #185a9d;
+	background: #ff5e62;
 	color: white;
 	padding: 12px;
 }
@@ -52,26 +50,32 @@ td {
 }
 
 tr:hover {
-	background: #f2f2f2;
+	background: #f5f5f5;
 }
 
-.home-btn {
+.btn {
 	display: inline-block;
 	margin-top: 20px;
 	padding: 10px 20px;
-	background: #43cea2;
-	color: white;
 	text-decoration: none;
 	border-radius: 6px;
+	color: white;
 	font-weight: bold;
-	transition: 0.3s;
 }
 
-.home-btn:hover {
-	background: #2bbf93;
+.home {
+	background: #4CAF50;
 }
 
-.no-data {
+.retry {
+	background: #ff5e62;
+}
+
+.btn:hover {
+	opacity: 0.85;
+}
+
+.error {
 	color: red;
 	font-weight: bold;
 }
@@ -83,15 +87,16 @@ tr:hover {
 
 	<div class="container">
 
-		<h2>📚 Book List</h2>
+		<h2>📚 Book Details</h2>
 
 		<%
-		ArrayList<BookBean> al = (ArrayList<BookBean>) request.getAttribute("list");
+		BookBean bb = (BookBean) request.getAttribute("bean");
 
-		if (al == null || al.isEmpty()) {
+		if (bb == null) {
 		%>
 
-		<p class="no-data">No Records Found</p>
+		<p class="error">No Records Found</p>
+		<a href="ViewByID.jsp" class="btn retry">Try Again</a>
 
 		<%
 } else {
@@ -106,10 +111,6 @@ tr:hover {
 				<th>Book Author</th>
 			</tr>
 
-			<%
-			for (BookBean bb : al) {
-			%>
-
 			<tr>
 				<td><%=bb.getId()%></td>
 				<td><%=bb.getName()%></td>
@@ -117,19 +118,16 @@ tr:hover {
 				<td><%=bb.getAuthor()%></td>
 			</tr>
 
-			<%
-}
-%>
-
 		</table>
+
+		<a href="index.html" class="btn home">🏠 Back to Home</a>
 
 		<%
 }
 %>
 
-		<a href="index.html" class="home-btn">🏠 Home</a>
-
 	</div>
 
 </body>
 </html>
+

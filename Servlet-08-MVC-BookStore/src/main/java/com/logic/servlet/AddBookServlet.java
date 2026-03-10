@@ -31,7 +31,7 @@ public class AddBookServlet extends GenericServlet {
 		int k = new AddBookDAO().saveBook(bb);
 
 		if (k > 0) {
-			pw.print("<font color= green> Book Added Successfully </font> <br>");
+			pw.print("<font color= white> Book Added Successfully </font> <br>");
 			RequestDispatcher rd = req.getRequestDispatcher("index.html");
 			rd.include(req, res);
 		} else {
