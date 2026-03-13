@@ -1,0 +1,15 @@
+create table userdetail(
+id int primary key,
+fname varchar(100),
+lname varchar(100),
+mid varchar(100),
+addr varchar(100),
+phone varchar(100)
+);
+
+create table customer(
+uname varchar(100),
+pass varchar(100),
+id int,
+foreign key(id) references userdetail(id)
+);
